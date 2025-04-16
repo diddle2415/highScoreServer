@@ -29,24 +29,24 @@ def initializeInstructorDB():
         cursor.execute('''CREATE TABLE IF NOT EXISTS instructorSets (
                              id INTEGER PRIMARY KEY AUTOINCREMENT,           
                              name TEXT,
-                             growthRate INTEGER
-                             maxSize INTEGER
-                             maxSeedCastDistance INTEGER
-                             maxSeedNumber INTEGER
-                             seedViability INTEGER
-                             energyInputGrazer INTEGER
-                             energyOutputGrazer INTEGER
-                             energyToReproduceGrazer INTEGER
-                             maintainSpeedGrazer INTEGER
-                             maxSpeedGrazer INTEGER
-                             maxSpeedHOD INTEGER
-                             maxSpeedHOR INTEGER
-                             maxSpeedHED INTEGER
-                             maintainSpeedPredator INTEGER
-                             energyOutputPredator INTEGER
-                             energyToReproducePredator INTEGER
-                             maxOffspring INTEGER
-                             gestation INTEGER
+                             growthRate INTEGER,
+                             maxSize INTEGER,
+                             maxSeedCastDistance INTEGER,
+                             maxSeedNumber INTEGER,
+                             seedViability INTEGER,
+                             energyInputGrazer INTEGER,
+                             energyOutputGrazer INTEGER,
+                             energyToReproduceGrazer INTEGER,
+                             maintainSpeedGrazer INTEGER,
+                             maxSpeedGrazer INTEGER,
+                             maxSpeedHOD INTEGER,
+                             maxSpeedHOR INTEGER,
+                             maxSpeedHED INTEGER,
+                             maintainSpeedPredator INTEGER,
+                             energyOutputPredator INTEGER,
+                             energyToReproducePredator INTEGER,
+                             maxOffspring INTEGER,
+                             gestation INTEGER,
                              offspringEnergy INTEGER
                         )''')
         
