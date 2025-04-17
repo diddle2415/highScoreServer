@@ -90,32 +90,47 @@ def getHighscores():
 @app.route('/submitInstructions', methods=['POST'])
 def submitInstructions():
     print("Submitting Instructor Limits")
-    data = request.json
-    name = data.get('name', "AAA")
-    growthRate = data.get('growthRate', 1)
-    maxSize = data.get('maxSize',1)
-    maxSeedCastDistance = data.get('maxSeedCastDistance', 1)
-    maxSeedNumber = data.get('maxSeedNumber', 1)
-    seedViability = data.get('seedViability', 1)
-    energyInputGrazer = data.get('energyInputGrazer', 1)
-    energyOutputGrazer = data.get('energyOutputGrazer', 1)
-    energyToReproduceGrazer = data.get('energyToReproduceGrazer', 1)
-    maintainSpeedGrazer = data.get('maintainSpeedGrazer', 1)
-    maxSpeedGrazer = data.get('maxSpeedGrazer', 1)
-    maxSpeedHOD = data.get('maxSpeedHOD', 1)
-    maxSpeedHOR = data.get('maxSpeedHOR', 1)
-    maxSpeedHED = data.get('maxSpeedHED', 1)
-    maintainSpeedPredator = data.get('maintainSpeedPredator', 1)
-    energyOutputPredator = data.get('energyOutputPredator', 1)
-    energyToReproducePredator = data.get('energyToReproducePredator', 1)
-    maxOffspring = data.get('maxOffspring', 1)
-    gestation = data.get('gestation', 1)
-    offspringEnergy = data.get('offspringEnergy', 1)
+    data = request.json()
+    toggleables = data.get("TOGGLEABLES", {})
+    name = toggleables.get('name', "AAA")
+    growthRate = toggleables.get('growthRate', 1)
+    maxSize = toggleables.get('maxSize', 1)
+    maxSeedCastDistance = toggleables.get('maxSeedCastDistance', 1)
+    maxSeedNumber = toggleables.get('maxSeedNumber', 1)
+    seedViability = toggleables.get('seedViability', 1)
+    energyInputGrazer = toggleables.get('energyInputGrazer', 1)
+    energyOutputGrazer = toggleables.get('energyOutputGrazer', 1)
+    energyToReproduceGrazer = toggleables.get('energyToReproduceGrazer', 1)
+    maintainSpeedGrazer = toggleables.get('maintainSpeedGrazer', 1)
+    maxSpeedGrazer = toggleables.get('maxSpeedGrazer', 1)
+    maxSpeedHOD = toggleables.get('maxSpeedHOD', 1)
+    maxSpeedHOR = toggleables.get('maxSpeedHOR', 1)
+    maxSpeedHED = toggleables.get('maxSpeedHED', 1)
+    maintainSpeedPredator = toggleables.get('maintainSpeedPredator', 1)
+    energyOutputPredator = toggleables.get('energyOutputPredator', 1)
+    energyToReproducePredator = toggleables.get('energyToReproducePredator', 1)
+    maxOffspring = toggleables.get('maxOffspring', 1)
+    gestation = toggleables.get('gestation', 1)
+    offspringEnergy = toggleables.get('offspringEnergy', 1)
     
     with sqlite3.connect("instructions.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO instructorSets (name, growthRate, maxSize, maxSeedCastDistance,maxSeedNumber, seedViability, energyInputGrazer, energyOutputGrazer, energyToReproduceGrazer, maintainSpeedGrazer, maxSpeedGrazer, maxSpeedHOD, maxSpeedHOR, maxSpeedHED, maintainSpeedPredator, energyOutputPredator, energyToReproducePredator, maxOffspring, gestation, offspringEnergy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (name, growthRate, maxSize, maxSeedCastDistance,maxSeedNumber, seedViability, energyInputGrazer, energyOutputGrazer, energyToReproduceGrazer, maintainSpeedGrazer, maxSpeedGrazer, maxSpeedHOD, maxSpeedHOR, maxSpeedHED, maintainSpeedPredator, energyOutputPredator, energyToReproducePredator, maxOffspring, gestation, offspringEnergy))
-        conn.commit()
+        cursor.execute('''
+            INSERT INTO instructorSets (
+                name, growthRate, maxSize, maxSeedCastDistance, maxSeedNumber,
+                seedViability, energyInputGrazer, energyOutputGrazer, energyToReproduceGrazer,
+                maintainSpeedGrazer, maxSpeedGrazer, maxSpeedHOD, maxSpeedHOR, maxSpeedHED,
+                maintainSpeedPredator, energyOutputPredator, energyToReproducePredator,
+                maxOffspring, gestation, offspringEnergy
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (
+            name, growthRate, maxSize, maxSeedCastDistance, maxSeedNumber,
+            seedViability, energyInputGrazer, energyOutputGrazer, energyToReproduceGrazer,
+            maintainSpeedGrazer, maxSpeedGrazer, maxSpeedHOD, maxSpeedHOR, maxSpeedHED,
+            maintainSpeedPredator, energyOutputPredator, energyToReproducePredator,
+            maxOffspring, gestation, offspringEnergy
+        ))
+        
     
     return jsonify({"message": "score submitted successfully"}), 200 #ok returned in the json
 
