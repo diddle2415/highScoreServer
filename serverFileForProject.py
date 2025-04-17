@@ -90,7 +90,7 @@ def getHighscores():
 @app.route('/submitInstructions', methods=['POST'])
 def submitInstructions():
     print("Submitting Instructor Limits")
-    data = request.json()
+    data = request.json
     toggleables = data.get("TOGGLEABLES", {})
     name = toggleables.get('name', "AAA")
     growthRate = toggleables.get('growthRate', 1)
