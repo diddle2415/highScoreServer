@@ -47,7 +47,9 @@ def initializeInstructorDB():
                              energyToReproducePredator INTEGER,
                              maxOffspring INTEGER,
                              gestation INTEGER,
-                             offspringEnergy INTEGER
+                             offspringEnergy INTEGER,
+                             landBounds INTEGER,
+                             timeBetweenSeeds INTEGER
                         )''')
         
 @app.route('/submitScore', methods=['POST']) #called to submit a new score to the database
@@ -112,6 +114,8 @@ def submitInstructions():
     maxOffspring = toggleables.get('maxOffspring', 1)
     gestation = toggleables.get('gestation', 1)
     offspringEnergy = toggleables.get('offspringEnergy', 1)
+    landBounds = toggleables.get('landBounds', 1)
+    timeBetweenSeeds = toggleables.get('timeBetweenSeeds', 1)
     
     with sqlite3.connect("instructions.db") as conn:
         cursor = conn.cursor()
@@ -121,14 +125,14 @@ def submitInstructions():
                 seedViability, energyInputGrazer, energyOutputGrazer, energyToReproduceGrazer,
                 maintainSpeedGrazer, maxSpeedGrazer, maxSpeedHOD, maxSpeedHOR, maxSpeedHED,
                 maintainSpeedPredator, energyOutputPredator, energyToReproducePredator,
-                maxOffspring, gestation, offspringEnergy
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                maxOffspring, gestation, offspringEnergy, landBounds, timeBetweenSeeds
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             name, growthRate, maxSize, maxSeedCastDistance, maxSeedNumber,
             seedViability, energyInputGrazer, energyOutputGrazer, energyToReproduceGrazer,
             maintainSpeedGrazer, maxSpeedGrazer, maxSpeedHOD, maxSpeedHOR, maxSpeedHED,
             maintainSpeedPredator, energyOutputPredator, energyToReproducePredator,
-            maxOffspring, gestation, offspringEnergy
+            maxOffspring, gestation, offspringEnergy, landBounds, timeBetweenSeeds
         ))
         
     
@@ -141,7 +145,7 @@ def getInstructionPresets():
         cursor.execute("SELECT name, growthRate, maxSize, maxSeedCastDistance,maxSeedNumber, seedViability, energyInputGrazer, energyOutputGrazer, energyToReproduceGrazer, maintainSpeedGrazer, maxSpeedGrazer, maxSpeedHOD, maxSpeedHOR, maxSpeedHED, maintainSpeedPredator, energyOutputPredator, energyToReproducePredator, maxOffspring, gestation, offspringEnergy FROM instructorSets ORDER BY name")
         instructorSets = cursor.fetchall()
         
-    instructionsList = [{"name": i[0], "growthRate": i[1], "maxSize": i[2], "maxSeedCastDistance": i[3],"maxSeedNumber": i[4], "seedViability": i[5], "energyInputGrazer": i[6], "energyOutputGrazer": i[7], "energyToReproduceGrazer": i[8], "maintainSpeedGrazer": i[9], "maxSpeedGrazer": i[10], "maxSpeedHOD": i[11], "maxSpeedHOR": i[12], "maxSpeedHED": i[13], "maintainSpeedPredator": i[14], "energyOutputPredator": i[15], "energyToReproducePredator": i[16], "maxOffspring": i[17], "gestation": i[18], "offspringEnergy": i[19]} for i in instructorSets]
+    instructionsList = [{"name": i[0], "growthRate": i[1], "maxSize": i[2], "maxSeedCastDistance": i[3],"maxSeedNumber": i[4], "seedViability": i[5], "energyInputGrazer": i[6], "energyOutputGrazer": i[7], "energyToReproduceGrazer": i[8], "maintainSpeedGrazer": i[9], "maxSpeedGrazer": i[10], "maxSpeedHOD": i[11], "maxSpeedHOR": i[12], "maxSpeedHED": i[13], "maintainSpeedPredator": i[14], "energyOutputPredator": i[15], "energyToReproducePredator": i[16], "maxOffspring": i[17], "gestation": i[18], "offspringEnergy": i[19], "landBounds": i[20], "timeBetweenSeeds": i[21]} for i in instructorSets]
     return jsonify(instructionsList)
 
 if __name__ == '__main__': #only run if being run on "main", or in other words if run directly
