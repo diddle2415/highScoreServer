@@ -142,7 +142,7 @@ def submitInstructions():
 def getInstructionPresets():
     with sqlite3.connect("instructions.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT name, growthRate, maxSize, maxSeedCastDistance,maxSeedNumber, seedViability, energyInputGrazer, energyOutputGrazer, energyToReproduceGrazer, maintainSpeedGrazer, maxSpeedGrazer, maxSpeedHOD, maxSpeedHOR, maxSpeedHED, maintainSpeedPredator, energyOutputPredator, energyToReproducePredator, maxOffspring, gestation, offspringEnergy FROM instructorSets ORDER BY name")
+        cursor.execute("SELECT name, growthRate, maxSize, maxSeedCastDistance,maxSeedNumber, seedViability, energyInputGrazer, energyOutputGrazer, energyToReproduceGrazer, maintainSpeedGrazer, maxSpeedGrazer, maxSpeedHOD, maxSpeedHOR, maxSpeedHED, maintainSpeedPredator, energyOutputPredator, energyToReproducePredator, maxOffspring, gestation, offspringEnergy, landBounds, timeBetweenSeeds FROM instructorSets ORDER BY name")
         instructorSets = cursor.fetchall()
         
     instructionsList = [{"name": i[0], "growthRate": i[1], "maxSize": i[2], "maxSeedCastDistance": i[3],"maxSeedNumber": i[4], "seedViability": i[5], "energyInputGrazer": i[6], "energyOutputGrazer": i[7], "energyToReproduceGrazer": i[8], "maintainSpeedGrazer": i[9], "maxSpeedGrazer": i[10], "maxSpeedHOD": i[11], "maxSpeedHOR": i[12], "maxSpeedHED": i[13], "maintainSpeedPredator": i[14], "energyOutputPredator": i[15], "energyToReproducePredator": i[16], "maxOffspring": i[17], "gestation": i[18], "offspringEnergy": i[19], "landBounds": i[20], "timeBetweenSeeds": i[21]} for i in instructorSets]
